@@ -10,12 +10,17 @@ import SwiftUI
 struct ContentView: View {
     var body: some View {
         List {
-            Text("Hello world")
-            Text("Hello world")
-            Text("Hello world")
-            ForEach(0..<5) {
-                Text("dynamic text \($0)")
+            Section("Section 1"){
+                Text("Hello world")
+                Text("Hello world")
+                Text("Hello world")
             }
+            Section{
+                ForEach(0..<5) {
+                    Text("dynamic text \($0)")
+                }
+            }
+            
         }
     }
 }
