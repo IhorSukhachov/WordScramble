@@ -15,12 +15,15 @@ struct ContentView: View {
                 Text("Hello world")
                 Text("Hello world")
             }
-            Section{
+            Section("Section 2"){
                 ForEach(0..<5) {
                     Text("dynamic text \($0)")
                 }
             }
             
+        }.listStyle(.grouped)
+        List(0..<5) {
+            Text("dynamic list \($0)") //csn use it without using foreach
         }
     }
 }
