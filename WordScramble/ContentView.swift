@@ -8,31 +8,19 @@
 import SwiftUI
 
 struct ContentView: View {
-    let people = ["Leia", "Luke", "Yoda", "Chewbacca"]
+   
     var body: some View {
-        List {
-            Section("Section 1"){
-                Text("Hello world")
-                Text("Hello world")
-                Text("Hello world")
-            }
-            Section("Section 2"){
-                ForEach(0..<5) {
-                    Text("dynamic text \($0)")
-                }
-            }
-            
-        }.listStyle(.grouped)
-        List(people, id: \.self) {
-            Text($0)
-        }
+        
     }
-    func testBundles() {
-        if let fileURL = Bundle.main.url(forResource: "somefile", withExtension: "txt") {
-            if let fileContents = try? String(contentsOf: fileURL) {
-                
-            }
-        }
+    
+    func testStrings() {
+        let input = "a b c"
+        let letters = input.components(separatedBy: " ")
+        let letter = letters.randomElement()
+        let trimmed = letter?.trimmingCharacters(in: .whitespacesAndNewlines)
+        //cheking word spelling:
+        let word = "swift"
+        let checker = UITextChecker()
     }
 }
 
