@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    let people = ["Leia", "Luke", "Yoda", "Chewbacca"]
     var body: some View {
         List {
             Section("Section 1"){
@@ -22,8 +23,8 @@ struct ContentView: View {
             }
             
         }.listStyle(.grouped)
-        List(0..<5) {
-            Text("dynamic list \($0)") //csn use it without using foreach
+        List(people, id: \.self) {
+            Text($0)
         }
     }
 }
