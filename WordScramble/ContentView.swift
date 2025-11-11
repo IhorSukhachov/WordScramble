@@ -25,12 +25,13 @@ struct ContentView: View {
                             Image(systemName: "\(word.count).circle")
                             Text(word)
                         }
-                      
+                        
                     }
                 }
             }
         }.navigationTitle(rootWord)
             .onSubmit(addNewWord)
+            .onAppear(perform: startGame)
     }
     func addNewWord() {
         let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
@@ -42,6 +43,37 @@ struct ContentView: View {
         }
         
         newWord = ""
+    }
+    
+    func startGame() {
+        if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
+            if let startWords = try? String(contentsOf: startWordsURL) {
+                let allWords = startWords.components(separatedBy: "\n")
+                rootWord = allWords.randomElement() ?? "silkword"
+                return
+            }
+        }
+        fatalError("Could not load start.txt from bundle")
+    }
+    func isOriginal(word: String) -> Bool {
+        !usedWordws.contains(word)
+    }
+    func isPossible(word: String) -> Bool {
+        var tempWord = rootWord
+        for letter in word {
+            if let pos = tempWord.firstIndex(of: letter) {
+                tempWord.remove(at: pos)
+            } else {
+                
+            }
+        }
+        return true
+    }
+    func isReal(word: String) -> Bool {
+        let checker = UITextChecker()
+        let range = NSRange(location: 0, length: word.utf16.count)
+        let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        return misspelledRange.location == NSNotFound
     }
 }
 
