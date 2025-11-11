@@ -16,11 +16,16 @@ struct ContentView: View {
             List {
                 Section {
                     TextField("Enter your word:", text: $newWord)
+                        .textInputAutocapitalization(.never)
                     
                 }
                 Section {
                     ForEach(usedWordws, id: \.self) { word in
-                        Text(word)
+                        HStack{
+                            Image(systemName: "\(word.count).circle")
+                            Text(word)
+                        }
+                      
                     }
                 }
             }
@@ -32,7 +37,10 @@ struct ContentView: View {
         guard answer.count > 0 else {
             return
         }
-        usedWordws.insert(answer, at: 0)
+        withAnimation {
+            usedWordws.insert(answer, at: 0)
+        }
+        
         newWord = ""
     }
 }
