@@ -24,7 +24,16 @@ struct ContentView: View {
                     }
                 }
             }
+        }.navigationTitle(rootWord)
+            .onSubmit(addNewWord)
+    }
+    func addNewWord() {
+        let answer = newWord.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        guard answer.count > 0 else {
+            return
         }
+        usedWordws.insert(answer, at: 0)
+        newWord = ""
     }
 }
 
