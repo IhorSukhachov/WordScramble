@@ -73,6 +73,13 @@ struct ContentView: View {
             return
         }
         
+        guard isNotAStartingWord(word: answer) else {
+            errorTitle = "Word is a starting word"
+            errorMessage = "Try another word."
+            showingError = true
+            return
+        }
+        
         withAnimation {
             usedWordws.insert(answer, at: 0)
         }
@@ -114,6 +121,10 @@ struct ContentView: View {
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         return misspelledRange.location == NSNotFound
     }
+    func isNotAStartingWord(word: String) -> Bool {
+        word.lowercased() != rootWord.lowercased()
+    }
+    
     func wordError(title: String, message: String) {
         errorTitle = title
         errorMessage = message
