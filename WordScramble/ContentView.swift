@@ -66,6 +66,13 @@ struct ContentView: View {
             showingError = true
             return
         }
+        guard isLongerThanThreeCharacters(word: answer) else {
+            errorTitle = "Word too short"
+            errorMessage = "Try another word."
+            showingError = true
+            return
+        }
+        
         withAnimation {
             usedWordws.insert(answer, at: 0)
         }
@@ -97,6 +104,10 @@ struct ContentView: View {
         }
         return true
     }
+    
+    func isLongerThanThreeCharacters(word: String) -> Bool {
+        word.count > 3
+    }
     func isReal(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
@@ -108,6 +119,8 @@ struct ContentView: View {
         errorMessage = message
         showingError = true
     }
+    
+    
 }
 
 
