@@ -14,6 +14,8 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError: Bool = false
+    @State private var numberOfWords = 0
+    @State private var numberOfLetters: Int = 0
     
     var body: some View {
         NavigationStack {
@@ -24,6 +26,9 @@ struct ContentView: View {
                     
                 }
                 Section {
+                    Text("Your score is: \(numberOfWords) words and \(numberOfLetters) letters")
+                }
+                Section {
                     ForEach(usedWordws, id: \.self) { word in
                         HStack{
                             Image(systemName: "\(word.count).circle")
@@ -32,13 +37,16 @@ struct ContentView: View {
                         
                     }
                 }
+                
+            }.navigationTitle(rootWord)
+                .onSubmit(addNewWord)
+                .onAppear(perform: startGame)
+                .alert(errorTitle, isPresented: $showingError) {}
+            message: {
+                Text(errorMessage)
+            }.toolbar {
+                Button("New Game", action: startGame)
             }
-        }.navigationTitle(rootWord)
-            .onSubmit(addNewWord)
-            .onAppear(perform: startGame)
-            .alert(errorTitle, isPresented: $showingError) {}
-        message: {
-            Text(errorMessage)
         }
                 
             
@@ -85,9 +93,12 @@ struct ContentView: View {
         }
         
         newWord = ""
+        numberOfWords += 1
+        numberOfLetters += answer.count
     }
     
     func startGame() {
+        usedWordws.removeAll()
         if let startWordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: startWordsURL) {
                 let allWords = startWords.components(separatedBy: "\n")
